@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/k0kubun/pp"
 	"github.com/karupanerura/runetrie"
 )
 
@@ -161,6 +162,7 @@ func Test_Trie_MatchAnyPrefixOf(t *testing.T) {
 			got := tr.MatchAnyPrefixOf(tt.target)
 			if diff := cmp.Diff(tt.want, got); diff != "" {
 				t.Errorf("Trie.MatchAnyPrefixOf() = %v, want %v.\n%s", got, tt.want, diff)
+				t.Log(pp.Sprint(tr))
 			}
 		})
 	}
@@ -227,6 +229,7 @@ func Test_Trie_MatchPrefixOf(t *testing.T) {
 			result, matched := tr.MatchPrefixOf(tt.target)
 			if diff := cmp.Diff(tt.want, ret{result, matched}); diff != "" {
 				t.Errorf("Trie.MatchPrefixOf() = (%v %v), want %v.\n%s", result, matched, tt.want, diff)
+				t.Log(pp.Sprint(tr))
 			}
 		})
 	}
@@ -287,6 +290,7 @@ func Test_Trie_LongestMatchPrefixOf(t *testing.T) {
 			result, matched := tr.LongestMatchPrefixOf(tt.target)
 			if diff := cmp.Diff(tt.want, ret{result, matched}); diff != "" {
 				t.Errorf("Trie.LongestMatchPrefixOf() = (%v, %v), want %v.\n%s", result, matched, tt.want, diff)
+				t.Log(pp.Sprint(tr))
 			}
 		})
 	}
@@ -354,6 +358,7 @@ func Test_Trie_MatchAny(t *testing.T) {
 			tr := runetrie.NewTrie(tt.set...)
 			if got := tr.MatchAny(tt.target); got != tt.want {
 				t.Errorf("Trie.MatchAny() = %v, want %v", got, tt.want)
+				t.Log(pp.Sprint(tr))
 			}
 		})
 	}
@@ -416,6 +421,7 @@ func Test_CaseInsensitiveTrie_MatchAnyPrefixOf(t *testing.T) {
 			got := tr.MatchAnyPrefixOf(tt.target)
 			if diff := cmp.Diff(tt.want, got); diff != "" {
 				t.Errorf("Trie.MatchAnyPrefixOf() = %v, want %v.\n%s", got, tt.want, diff)
+				t.Log(pp.Sprint(tr))
 			}
 		})
 	}
@@ -476,6 +482,7 @@ func Test_CaseInsensitiveTrie_MatchPrefixOf(t *testing.T) {
 			result, matched := tr.MatchPrefixOf(tt.target)
 			if diff := cmp.Diff(tt.want, ret{result, matched}); diff != "" {
 				t.Errorf("Trie.MatchPrefixOf() = (%v %v), want %v.\n%s", result, matched, tt.want, diff)
+				t.Log(pp.Sprint(tr))
 			}
 		})
 	}
@@ -536,6 +543,7 @@ func Test_CaseInsensitiveTrie_LongestMatchPrefixOf(t *testing.T) {
 			result, matched := tr.LongestMatchPrefixOf(tt.target)
 			if diff := cmp.Diff(tt.want, ret{result, matched}); diff != "" {
 				t.Errorf("Trie.LongestMatchPrefixOf() = (%v %v), want %v.\n%s", result, matched, tt.want, diff)
+				t.Log(pp.Sprint(tr))
 			}
 		})
 	}
@@ -603,6 +611,7 @@ func Test_CaseInsensitiveTrie_MatchAny(t *testing.T) {
 			tr := runetrie.Must(runetrie.NewCaseInsensitiveTrie(tt.set...))
 			if got := tr.MatchAny(tt.target); got != tt.want {
 				t.Errorf("Trie.MatchAny() = %v, want %v", got, tt.want)
+				t.Log(pp.Sprint(tr))
 			}
 		})
 	}
