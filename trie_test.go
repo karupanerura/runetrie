@@ -125,6 +125,12 @@ func Test_Trie_MatchAnyPrefixOf(t *testing.T) {
 			want:   false,
 		},
 		{
+			name:   "EmptyIsNotMatchAnyStrings",
+			set:    []string{"foo"},
+			target: "",
+			want:   false,
+		},
+		{
 			name:   "ExactlyMatchA",
 			set:    []string{"A"},
 			target: "A",
@@ -189,6 +195,12 @@ func Test_Trie_MatchPrefixOf(t *testing.T) {
 			name:   "EmptyIsNotAnyStrings",
 			set:    []string{},
 			target: "foo",
+			want:   ret{"", false},
+		},
+		{
+			name:   "EmptyIsNotMatchAnyStrings",
+			set:    []string{"foo"},
+			target: "",
 			want:   ret{"", false},
 		},
 		{
@@ -259,6 +271,12 @@ func Test_Trie_LongestMatchPrefixOf(t *testing.T) {
 			want:   ret{"", false},
 		},
 		{
+			name:   "EmptyIsNotMatchAnyStrings",
+			set:    []string{"foo"},
+			target: "",
+			want:   ret{"", false},
+		},
+		{
 			name:   "ExactlyMatchA",
 			set:    []string{"A"},
 			target: "A",
@@ -316,6 +334,12 @@ func Test_Trie_MatchAny(t *testing.T) {
 			want:   false,
 		},
 		{
+			name:   "EmptyIsNotMatchAnyStrings",
+			set:    []string{"foo"},
+			target: "",
+			want:   false,
+		},
+		{
 			name:   "ExactlyMatchA",
 			set:    []string{"A"},
 			target: "A",
@@ -344,6 +368,12 @@ func Test_Trie_MatchAny(t *testing.T) {
 			set:    []string{"AAAA", "ABAA", "ACAA", "ABCA"},
 			target: "abca",
 			want:   false,
+		},
+		{
+			name:   "Symbols",
+			set:    []string{">", ">=", "<", "<="},
+			target: ">",
+			want:   true,
 		},
 		{
 			name:   "EarlyExit",
@@ -381,6 +411,12 @@ func Test_CaseInsensitiveTrie_MatchAnyPrefixOf(t *testing.T) {
 			name:   "EmptyIsNotAnyStrings",
 			set:    []string{},
 			target: "foo",
+			want:   false,
+		},
+		{
+			name:   "EmptyIsNotMatchAnyStrings",
+			set:    []string{"foo"},
+			target: "",
 			want:   false,
 		},
 		{
@@ -451,6 +487,12 @@ func Test_CaseInsensitiveTrie_MatchPrefixOf(t *testing.T) {
 			want:   ret{"", false},
 		},
 		{
+			name:   "EmptyIsNotMatchAnyStrings",
+			set:    []string{"foo"},
+			target: "",
+			want:   ret{"", false},
+		},
+		{
 			name:   "ExactlyMatchA",
 			set:    []string{"A"},
 			target: "A",
@@ -512,6 +554,12 @@ func Test_CaseInsensitiveTrie_LongestMatchPrefixOf(t *testing.T) {
 			want:   ret{"", false},
 		},
 		{
+			name:   "EmptyIsNotMatchAnyStrings",
+			set:    []string{"foo"},
+			target: "",
+			want:   ret{"", false},
+		},
+		{
 			name:   "ExactlyMatchA",
 			set:    []string{"A"},
 			target: "A",
@@ -569,6 +617,12 @@ func Test_CaseInsensitiveTrie_MatchAny(t *testing.T) {
 			want:   false,
 		},
 		{
+			name:   "EmptyIsNotMatchAnyStrings",
+			set:    []string{"foo"},
+			target: "",
+			want:   false,
+		},
+		{
 			name:   "ExactlyMatchA",
 			set:    []string{"A"},
 			target: "A",
@@ -596,6 +650,12 @@ func Test_CaseInsensitiveTrie_MatchAny(t *testing.T) {
 			name:   "CaseInsensitive",
 			set:    []string{"AAAA", "ABAA", "ACAA", "ABCA"},
 			target: "abca",
+			want:   true,
+		},
+		{
+			name:   "Symbols",
+			set:    []string{">", ">=", "<", "<="},
+			target: ">",
 			want:   true,
 		},
 		{

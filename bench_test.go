@@ -26,7 +26,7 @@ func init() {
 			}
 		}
 	}
-	sort.Sort(sort.StringSlice(targetStrings))
+	sort.Strings(targetStrings)
 
 	searchStrings = make([]string, len(targetStrings))
 	copy(searchStrings, targetStrings)
@@ -42,7 +42,7 @@ func init() {
 			}
 		}
 	}
-	sort.Sort(sort.StringSlice(searchStrings))
+	sort.Strings(searchStrings)
 }
 
 func BenchmarkStringsHasPrefixShortestMatch(b *testing.B) {
