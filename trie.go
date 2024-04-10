@@ -88,17 +88,14 @@ func (t *Trie[T]) MatchAny(s T) bool {
 	if t.m == nil {
 		return false
 	}
-	if len(s) < t.l.min || t.l.max < len(s) {
-		return false
-	}
 
 	tree := t
 	for i, c := range s {
-		if leaf, ok := tree.m[c]; ok {
-			if len(s[i+1:]) < leaf.l.min || leaf.l.max < len(s[i+1:]) {
-				break
-			}
+		if len(s[i:]) < tree.l.min || tree.l.max < len(s[i:]) {
+			return false
+		}
 
+		if leaf, ok := tree.m[c]; ok {
 			tree = leaf
 			if tree.m == nil {
 				break
@@ -107,6 +104,7 @@ func (t *Trie[T]) MatchAny(s T) bool {
 			return false
 		}
 	}
+
 	return tree.s != ""
 }
 
