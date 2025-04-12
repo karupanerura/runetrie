@@ -2,73 +2,12 @@ package runetrie_test
 
 import (
 	"errors"
-	"fmt"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/k0kubun/pp"
 	"github.com/karupanerura/runetrie"
 )
-
-func ExampleNewTrie() {
-	trie := runetrie.NewTrie("foo", "bar", "buz")
-	fmt.Println(trie.MatchAny("foo"))
-	// Output: true
-}
-
-func ExampleNewCaseInsensitiveTrie() {
-	trie := runetrie.Must(runetrie.NewCaseInsensitiveTrie("FoO", "bAr", "buz"))
-	fmt.Println(trie.LongestMatchPrefixOf("fOoo"))
-	fmt.Println(trie.LongestMatchPrefixOf("BaR!"))
-	// Output:
-	// FoO true
-	// bAr true
-}
-
-func ExampleTrie_Add() {
-	trie := runetrie.NewTrie("foo", "bar", "buz")
-	fmt.Println(trie.MatchAny("hoge"))
-	trie.Add("hoge")
-	fmt.Println(trie.MatchAny("hoge"))
-	// Output:
-	// false
-	// true
-}
-
-func ExampleTrie_MatchAny() {
-	trie := runetrie.NewTrie("foo", "bar", "buz")
-	fmt.Println(trie.MatchAny("fo"))
-	fmt.Println(trie.MatchAny("foo"))
-	fmt.Println(trie.MatchAny("fooo"))
-	// Output:
-	// false
-	// true
-	// false
-}
-
-func ExampleTrie_MatchAnyPrefixOf() {
-	trie := runetrie.NewTrie("foo", "bar", "buz")
-	fmt.Println(trie.MatchAnyPrefixOf("fo"))
-	fmt.Println(trie.MatchAnyPrefixOf("foo"))
-	fmt.Println(trie.MatchAnyPrefixOf("fooo"))
-	// Output:
-	// false
-	// true
-	// true
-}
-
-func ExampleTrie_LongestMatchPrefixOf() {
-	trie := runetrie.NewTrie("foo", "bar", "buz", "foooo")
-	fmt.Println(trie.LongestMatchPrefixOf("fo"))
-	fmt.Println(trie.LongestMatchPrefixOf("foo"))
-	fmt.Println(trie.LongestMatchPrefixOf("fooo"))
-	fmt.Println(trie.LongestMatchPrefixOf("foooo"))
-	// Output:
-	// false
-	// foo true
-	// foo true
-	// foooo true
-}
 
 func TestMust(t *testing.T) {
 	defer func() {

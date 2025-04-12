@@ -1,6 +1,14 @@
 # runetrie
 
-Trie matcher for Go string types by runes.
+[![Go Reference](https://pkg.go.dev/badge/github.com/karupanerura/runetrie.svg)](https://pkg.go.dev/github.com/karupanerura/runetrie)
+
+Package runetrie provides an efficient, generic implementation of the trie (prefix tree) data structure for string matching operations.
+
+A trie, also known as a prefix tree, is a data structure that allows for efficient string lookups, prefix matching, and related operations with better performance characteristics than linear string comparisons in many scenarios.
+
+The implementation uses generic types allowing it to work with any string-like type.
+
+The package is designed for performance, with efficient lookups compared to linear string comparison approaches, especially when handling a large set of strings.
 
 ## Benchmark
 
@@ -18,3 +26,7 @@ BenchmarkTrieMatchAnyPrefixOf-12             	 4555736	       263.6 ns/op	      
 BenchmarkTrieMatchPrefixOf-12                	 4533429	       263.7 ns/op	       0 B/op	       0 allocs/op
 BenchmarkTrieLongestMatchPrefixOf-12         	  733917	      1647 ns/op	       0 B/op	       0 allocs/op
 ```
+
+## License
+
+MIT License

@@ -5,8 +5,13 @@ import (
 	"unicode"
 )
 
+// ErrConflictEntry is returned when a new entry conflicts with an existing one.
+// This can happen only in case insensitive mode.
+// For example, if you add "foo" and then try to add "FOO", it will return this error.
 var ErrConflictEntry = errors.New("conflict entry")
 
+// Trie is a prefix tree (trie) .
+// It is case sensitive by default.
 type Trie[T ~string] struct {
 	i bool // case insensitive
 	m map[rune]*Trie[T]
@@ -16,6 +21,10 @@ type Trie[T ~string] struct {
 	s T
 }
 
+// Must is a helper function to create a new Trie and panic if an error occurs.
+// It is useful for initializing a Trie in a single line.
+// It should be used with caution, as it will panic on error.
+// Use it only when you are sure that the error will not occur.
 func Must[T ~string](trie *Trie[T], err error) *Trie[T] {
 	if err != nil {
 		panic(err)
@@ -23,12 +32,17 @@ func Must[T ~string](trie *Trie[T], err error) *Trie[T] {
 	return trie
 }
 
+// NewTrie creates a new case sensitive Trie with the given strings.
+// It calls Add method to add the strings to the Trie internally.
 func NewTrie[T ~string](ss ...T) *Trie[T] {
 	trie := &Trie[T]{}
 	_ = trie.Add(ss...)
 	return trie
 }
 
+// NewCaseInsensitiveTrie creates a new case insensitive Trie with the given strings.
+// It is useful for searching strings in a case insensitive manner.
+// It calls Add method to add the strings to the Trie internally.
 func NewCaseInsensitiveTrie[T ~string](ss ...T) (*Trie[T], error) {
 	trie := &Trie[T]{i: true}
 	if err := trie.Add(ss...); err != nil {
@@ -37,6 +51,11 @@ func NewCaseInsensitiveTrie[T ~string](ss ...T) (*Trie[T], error) {
 	return trie, nil
 }
 
+// Add adds a new string to the Trie.
+// Only in case insensitive mode, it will check for conflicts.
+// If a conflict is found, it returns ErrConflictEntry.
+// If the string is already present, it does nothing and returns nil.
+// If the string is not present, it adds it to the Trie and returns nil.
 func (t *Trie[T]) Add(ss ...T) error {
 	for _, s := range ss {
 		if t.l.min == 0 || t.l.min > len(s) {
@@ -84,6 +103,8 @@ func (t *Trie[T]) Add(ss ...T) error {
 	return nil
 }
 
+// MatchAny checks if any of the strings in the Trie match the given string.
+// It returns true if there is a match, false otherwise.
 func (t *Trie[T]) MatchAny(s T) bool {
 	if t.m == nil {
 		return false
@@ -108,6 +129,8 @@ func (t *Trie[T]) MatchAny(s T) bool {
 	return tree.s != ""
 }
 
+// MatchAnyPrefixOf checks if any of the strings in the Trie match any prefix of the given string.
+// It returns true if there is a match, false otherwise.
 func (t *Trie[T]) MatchAnyPrefixOf(s T) bool {
 	if len(s) < t.l.min {
 		return false
@@ -130,6 +153,8 @@ func (t *Trie[T]) MatchAnyPrefixOf(s T) bool {
 	return tree.s != ""
 }
 
+// MatchPrefixOf checks if the given string's prefix matches any of the strings in the Trie.
+// It returns the shortest matched string and true if there is a match, or an empty string and false otherwise.
 func (t *Trie[T]) MatchPrefixOf(s T) (T, bool) {
 	if len(s) < t.l.min {
 		var zero T
@@ -155,6 +180,8 @@ func (t *Trie[T]) MatchPrefixOf(s T) (T, bool) {
 	return zero, false
 }
 
+// MatchPrefixOf checks if the given string's prefix matches any of the strings in the Trie.
+// It returns the longest matched string and true if there is a match, or an empty string and false otherwise.
 func (t *Trie[T]) LongestMatchPrefixOf(s T) (T, bool) {
 	if len(s) < t.l.min {
 		var zero T
